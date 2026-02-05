@@ -91,10 +91,12 @@ export const PurchaseCard = ({ purchase, currentPrice, onToggle }: PurchaseCardP
             <span className="text-muted-foreground whitespace-nowrap">
               {purchase.btcAmount} BTC
             </span>
-            <span className="text-muted-foreground whitespace-nowrap">
+            <span className={`whitespace-nowrap font-mono ${!purchase.completed && currentPrice ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
               ~€{purchase.completed && purchase.actualCostEUR 
                 ? purchase.actualCostEUR.toFixed(2)
-                : purchase.estimatedCostEUR.toFixed(2)}
+                : currentPrice 
+                  ? (currentPrice * purchase.btcAmount * 0.92).toFixed(2)
+                  : purchase.estimatedCostEUR.toFixed(2)}
             </span>
           </div>
 

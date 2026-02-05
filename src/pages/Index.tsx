@@ -101,13 +101,33 @@ const Index = () => {
                   <CalendarClock className="h-5 w-5 text-primary" />
                   <h2 className="text-lg font-semibold">Próxima Compra</h2>
                 </div>
-                <div className="mb-4">
-                  <div className="text-sm text-muted-foreground mb-1">Objetivo</div>
-                  <div className="text-2xl font-mono font-bold text-white">
-                    ${nextPurchase.targetPrice.toLocaleString()}
+                <div className="mb-4 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-xs text-muted-foreground mb-1">Objetivo</div>
+                      <div className="text-xl md:text-2xl font-mono font-bold text-white">
+                        ${nextPurchase.targetPrice.toLocaleString()}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                       <div className="text-xs text-muted-foreground mb-1">Precio Actual</div>
+                       <div className={`text-xl md:text-2xl font-mono font-bold ${
+                         (priceData?.price ?? 0) <= nextPurchase.targetPrice ? 'text-success animate-pulse' : 'text-primary'
+                       }`}>
+                         ${priceData?.price?.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) ?? '---'}
+                       </div>
+                    </div>
                   </div>
-                  <div className="text-xs text-muted-foreground">
-                    Estimado: {new Date(nextPurchase.estimatedDate).toLocaleDateString()}
+                  
+                  <div className="flex items-center justify-between p-3 bg-black/20 rounded-xl border border-white/5 backdrop-blur-sm">
+                    <span className="text-xs text-muted-foreground">Costo Estimado (Live):</span>
+                    <span className="font-mono font-bold text-lg">
+                      €{((priceData?.price ?? 0) * nextPurchase.btcAmount * 0.92).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </span>
+                  </div>
+
+                  <div className="text-xs text-center text-muted-foreground pt-2">
+                    Fecha estimada: {new Date(nextPurchase.estimatedDate).toLocaleDateString()}
                   </div>
                 </div>
                 <Countdown targetDate={nextPurchase.estimatedDate} />
