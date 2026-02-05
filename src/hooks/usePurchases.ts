@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Purchase, generatePurchasePlan, TOTAL_BTC_GOAL, PlanType } from '@/data/purchasePlan';
 
-const STORAGE_KEY = 'btc-accumulation-purchases-v3';
-const PLAN_TYPE_KEY = 'btc-accumulation-plan-type-v3';
+const STORAGE_KEY = 'btc-accumulation-purchases-v4';
+const PLAN_TYPE_KEY = 'btc-accumulation-plan-type-v4';
 
 export const usePurchases = () => {
   const [purchases, setPurchases] = useState<Purchase[]>([]);

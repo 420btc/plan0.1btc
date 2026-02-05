@@ -15,21 +15,21 @@ export type PlanType = 'conservative' | 'moderate' | 'aggressive';
 export const PLAN_DETAILS: Record<PlanType, { name: string; description: string; startPrice: number; endPrice: number }> = {
   conservative: {
     name: 'Conservador',
-    description: 'Esperar gran caída (95k - 45k)',
-    startPrice: 95000,
-    endPrice: 45000,
+    description: 'Entrada tardía (62k - 42k)',
+    startPrice: 62000,
+    endPrice: 42000,
   },
   moderate: {
     name: 'Moderado',
-    description: 'Rango amplio (75k - 25k)',
-    startPrice: 75000,
-    endPrice: 25000,
+    description: 'Plan original (70k - 40k)',
+    startPrice: 70000,
+    endPrice: 40000,
   },
   aggressive: {
     name: 'Agresivo',
-    description: 'Moon shot (100k - 200k)',
-    startPrice: 100000,
-    endPrice: 200000,
+    description: 'Acumulación total (80k - 45k)',
+    startPrice: 80000,
+    endPrice: 45000,
   },
 };
 
@@ -39,8 +39,8 @@ const EUR_USD_RATE = 0.86;
 const BTC_PER_PURCHASE = 0.002;
 const TOTAL_PURCHASES = 50;
 
-// Fechas desde Feb 2026 hasta finales 2028 (~34 meses, cada ~21 días)
-const START_DATE = new Date('2026-02-01');
+// Fechas desde Marzo 2026 hasta finales 2028 (~34 meses, cada ~21 días)
+const START_DATE = new Date('2026-03-01');
 const DAYS_BETWEEN = 21;
 
 export const generatePurchasePlan = (type: PlanType = 'moderate'): Purchase[] => {
