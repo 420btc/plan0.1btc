@@ -50,7 +50,7 @@ export const PurchaseList = ({ purchases, currentPrice, onToggle }: PurchaseList
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
         {filters.map(({ key, label, icon: Icon, count }) => (
           <Button
             key={key}
