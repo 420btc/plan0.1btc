@@ -92,9 +92,9 @@ export const MonthlyActivity = ({ purchases }: MonthlyActivityProps) => {
                 <div className="h-32 flex items-end justify-center w-full bg-black/20 rounded-lg relative overflow-hidden">
                   <div 
                     className={`w-full mx-2 rounded-t-sm transition-all duration-500 ${
-                      data.status === 'completed' ? 'bg-primary shadow-[0_0_10px_rgba(234,179,8,0.3)]' :
-                      data.status === 'partial' ? 'bg-primary/60' :
-                      'bg-white/10'
+                      data.status === 'completed' ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.3)]' :
+                      data.status === 'partial' ? 'bg-orange-500/60' :
+                      'bg-orange-500/20'
                     }`}
                     style={{ height: `${(data.totalCost / maxCost) * 100}%` }}
                   />

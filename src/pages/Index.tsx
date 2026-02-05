@@ -6,6 +6,10 @@ import { PurchaseList } from '@/components/PurchaseList';
 import { Countdown } from '@/components/Countdown';
 import { PortfolioStats } from '@/components/PortfolioStats';
 import { MonthlyActivity } from '@/components/MonthlyActivity';
+import { FearAndGreed } from '@/components/FearAndGreed';
+import { SatsConverter } from '@/components/SatsConverter';
+import { FutureSimulator } from '@/components/FutureSimulator';
+import { HalvingCountdown } from '@/components/HalvingCountdown';
 import { useBitcoinPrice } from '@/hooks/useBitcoinPrice';
 import { usePurchases } from '@/hooks/usePurchases';
 import { TOTAL_BTC_GOAL, TOTAL_PURCHASES_COUNT, PLAN_DETAILS, PlanType } from '@/data/purchasePlan';
@@ -102,6 +106,12 @@ const Index = () => {
               />
             </div>
 
+            {/* Fear and Greed Index */}
+            <FearAndGreed />
+
+            {/* Sats Converter */}
+            <SatsConverter currentPriceEUR={priceData?.priceEUR ?? null} />
+
              {/* Countdown Card */}
              {nextPurchase && (
               <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
@@ -160,7 +170,12 @@ const Index = () => {
           </div>
 
           {/* Right column - Purchase List */}
-          <div className="lg:col-span-3 min-w-0">
+          <div className="lg:col-span-3 min-w-0 space-y-4 md:space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              <FutureSimulator totalBtc={totalBtcAccumulated} />
+              <HalvingCountdown />
+            </div>
+
             <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
               <h2 className="text-lg md:text-xl font-semibold mb-3 md:mb-4">Plan de Compras ({PLAN_DETAILS[currentPlanType].name})</h2>
               <p className="text-xs md:text-sm text-muted-foreground mb-4 md:mb-6">
