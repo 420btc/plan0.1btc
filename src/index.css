@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  :root {
+    --background: 220 20% 7%;
+    --foreground: 40 20% 95%;
+
+    --card: 220 18% 10%;
+    --card-foreground: 40 20% 95%;
+
+    --popover: 220 18% 10%;
+    --popover-foreground: 40 20% 95%;
+
+    --primary: 33 95% 53%;
+    --primary-foreground: 220 20% 7%;
+
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 40 20% 95%;
+
+    --muted: 220 15% 18%;
+    --muted-foreground: 220 10% 55%;
+
+    --accent: 33 95% 53%;
+    --accent-foreground: 220 20% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 40 20% 95%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 220 20% 7%;
+
+    --warning: 45 95% 55%;
+    --warning-foreground: 220 20% 7%;
+
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 33 95% 53%;
+
+    --radius: 0.75rem;
+
+    --chart-1: 33 95% 53%;
+    --chart-2: 142 70% 45%;
+    --chart-3: 220 15% 35%;
+    --chart-4: 45 95% 55%;
+    --chart-5: 0 84% 60%;
+
+    --sidebar-background: 220 18% 8%;
+    --sidebar-foreground: 40 20% 95%;
+    --sidebar-primary: 33 95% 53%;
+    --sidebar-primary-foreground: 220 20% 7%;
+    --sidebar-accent: 220 15% 15%;
+    --sidebar-accent-foreground: 40 20% 95%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 33 95% 53%;
+
+    --gradient-bitcoin: linear-gradient(135deg, hsl(33 95% 53%) 0%, hsl(25 95% 45%) 100%);
+    /* Glass Dark Gradient */
+    --gradient-card: linear-gradient(180deg, rgba(30, 35, 45, 0.7) 0%, rgba(20, 25, 35, 0.4) 100%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(33 95% 53% / 0.1) 0%, transparent 70%);
+
+    --shadow-glow: 0 0 30px hsl(33 95% 53% / 0.15);
+    --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .dark {
+    --background: 220 20% 7%;
+    --foreground: 40 20% 95%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Space Grotesk', sans-serif;
+    background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 100%);
+    background-attachment: fixed;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-bitcoin {
+    background: var(--gradient-bitcoin);
+  }
+
+  .bg-gradient-card {
+    background: var(--gradient-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .bg-gradient-glow {
+    background: var(--gradient-glow);
+  }
+  
+  .glass-panel {
+    @apply bg-gradient-card shadow-card rounded-2xl border border-white/5;
+  }
+}
