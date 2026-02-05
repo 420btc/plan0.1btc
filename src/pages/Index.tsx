@@ -30,14 +30,14 @@ const Index = () => {
     .map(p => p.targetPrice);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden w-full">
       {/* Background glow effect */}
       <div className="fixed inset-0 bg-gradient-glow pointer-events-none" />
       
-      <div className="relative container max-w-6xl mx-auto px-4 pb-8">
+      <div className="relative container max-w-6xl mx-auto px-2 md:px-4 pb-8">
         <Header onReset={() => resetPlan(currentPlanType)} />
 
-        <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mb-6 md:mb-8 grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           {(Object.entries(PLAN_DETAILS) as [PlanType, typeof PLAN_DETAILS['moderate']][]).map(([key, detail]) => {
             const isSelected = currentPlanType === key;
             return (
@@ -45,7 +45,7 @@ const Index = () => {
                 key={key}
                 onClick={() => resetPlan(key)}
                 className={`
-                  relative overflow-hidden rounded-xl p-4 text-left transition-all duration-300 border
+                  relative overflow-hidden rounded-xl p-3 md:p-4 text-left transition-all duration-300 border
                   ${isSelected 
                     ? 'bg-primary/10 border-primary shadow-[0_0_20px_rgba(234,179,8,0.2)]' 
                     : 'bg-card/50 border-white/5 hover:border-white/10 hover:bg-card'
@@ -54,15 +54,15 @@ const Index = () => {
               >
                 <div className={`absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 transition-opacity duration-300 ${isSelected ? 'opacity-100' : ''}`} />
                 <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className={`text-lg font-bold tracking-tight ${isSelected ? 'text-primary' : 'text-foreground'}`}>
+                  <div className="flex items-center justify-between mb-1.5 md:mb-2">
+                    <span className={`text-base md:text-lg font-bold tracking-tight ${isSelected ? 'text-primary' : 'text-foreground'}`}>
                       {detail.name}
                     </span>
                     {isSelected && (
-                      <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_8px_rgba(234,179,8,0.8)]" />
+                      <span className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-primary shadow-[0_0_8px_rgba(234,179,8,0.8)]" />
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground font-mono leading-relaxed">
+                  <p className="text-[10px] md:text-xs text-muted-foreground font-mono leading-relaxed">
                     {detail.description}
                   </p>
                 </div>
@@ -71,11 +71,11 @@ const Index = () => {
           })}
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 md:gap-6">
           {/* Left column - Price & Chart */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 md:space-y-6 min-w-0">
             {/* Live Price Card */}
-            <div className="bg-gradient-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
               <div className="flex items-center gap-2 mb-4">
                 <Activity className="h-5 w-5 text-primary" />
                 <h2 className="text-lg font-semibold">Bitcoin en Tiempo Real</h2>
@@ -96,7 +96,7 @@ const Index = () => {
 
              {/* Countdown Card */}
              {nextPurchase && (
-              <div className="bg-gradient-card rounded-2xl p-6 shadow-card border border-border/50">
+              <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
                 <div className="flex items-center gap-2 mb-4">
                   <CalendarClock className="h-5 w-5 text-primary" />
                   <h2 className="text-lg font-semibold">Próxima Compra</h2>
@@ -115,7 +115,7 @@ const Index = () => {
             )}
 
             {/* Chart Card */}
-            <div className="bg-gradient-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
               <h2 className="text-lg font-semibold mb-4">Últimas 24 horas</h2>
               <PriceChart data={priceHistory} buyZones={buyZones} />
             </div>
@@ -132,10 +132,10 @@ const Index = () => {
           </div>
 
           {/* Right column - Purchase List */}
-          <div className="lg:col-span-3">
-            <div className="bg-gradient-card rounded-2xl p-6 shadow-card border border-border/50">
-              <h2 className="text-xl font-semibold mb-4">Plan de Compras ({PLAN_DETAILS[currentPlanType].name})</h2>
-              <p className="text-sm text-muted-foreground mb-6">
+          <div className="lg:col-span-3 min-w-0">
+            <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
+              <h2 className="text-lg md:text-xl font-semibold mb-3 md:mb-4">Plan de Compras ({PLAN_DETAILS[currentPlanType].name})</h2>
+              <p className="text-xs md:text-sm text-muted-foreground mb-4 md:mb-6">
                 50 compras de 0.002 BTC cada una. {PLAN_DETAILS[currentPlanType].description}.
               </p>
               

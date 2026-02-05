@@ -46,20 +46,20 @@ export const Countdown = ({ targetDate }: CountdownProps) => {
   return (
     <div className="grid grid-cols-4 gap-2 text-center">
       <div className="bg-black/20 rounded-lg p-2 backdrop-blur-sm border border-white/5">
-        <div className="text-2xl font-bold text-primary font-mono">{timeLeft.days}</div>
-        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Días</div>
+        <div className="text-lg md:text-2xl font-bold text-primary font-mono">{timeLeft.days}</div>
+        <div className="text-[8px] md:text-[10px] uppercase tracking-wider text-muted-foreground">Días</div>
       </div>
       <div className="bg-black/20 rounded-lg p-2 backdrop-blur-sm border border-white/5">
-        <div className="text-2xl font-bold text-primary font-mono">{timeLeft.hours}</div>
-        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Hrs</div>
+        <div className="text-lg md:text-2xl font-bold text-primary font-mono">{timeLeft.hours}</div>
+        <div className="text-[8px] md:text-[10px] uppercase tracking-wider text-muted-foreground">Hrs</div>
       </div>
       <div className="bg-black/20 rounded-lg p-2 backdrop-blur-sm border border-white/5">
-        <div className="text-2xl font-bold text-primary font-mono">{timeLeft.minutes}</div>
-        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Min</div>
+        <div className="text-lg md:text-2xl font-bold text-primary font-mono">{timeLeft.minutes}</div>
+        <div className="text-[8px] md:text-[10px] uppercase tracking-wider text-muted-foreground">Min</div>
       </div>
       <div className="bg-black/20 rounded-lg p-2 backdrop-blur-sm border border-white/5">
-        <div className="text-2xl font-bold text-primary font-mono">{timeLeft.seconds}</div>
-        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Seg</div>
+        <div className="text-lg md:text-2xl font-bold text-primary font-mono">{timeLeft.seconds}</div>
+        <div className="text-[8px] md:text-[10px] uppercase tracking-wider text-muted-foreground">Seg</div>
       </div>
     </div>
   );
