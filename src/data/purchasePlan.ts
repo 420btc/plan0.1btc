@@ -15,20 +15,20 @@ export type PlanType = 'conservative' | 'moderate' | 'aggressive';
 export const PLAN_DETAILS: Record<PlanType, { name: string; description: string; startPrice: number; endPrice: number }> = {
   conservative: {
     name: 'Conservador',
-    description: 'Entrada tardía (62k - 42k)',
-    startPrice: 62000,
-    endPrice: 42000,
+    description: 'Entrada tardía (60k - 35k)',
+    startPrice: 60000,
+    endPrice: 35000,
   },
   moderate: {
     name: 'Moderado',
-    description: 'Plan original (70k - 40k)',
-    startPrice: 70000,
+    description: 'Plan ajustado (65k - 40k)',
+    startPrice: 65000,
     endPrice: 40000,
   },
   aggressive: {
     name: 'Agresivo',
-    description: 'Acumulación total (80k - 45k)',
-    startPrice: 80000,
+    description: 'Acumulación intensa (65k - 45k)',
+    startPrice: 65000,
     endPrice: 45000,
   },
 };

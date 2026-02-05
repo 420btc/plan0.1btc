@@ -4,6 +4,8 @@ import { PriceChart } from '@/components/PriceChart';
 import { ProgressCard } from '@/components/ProgressCard';
 import { PurchaseList } from '@/components/PurchaseList';
 import { Countdown } from '@/components/Countdown';
+import { PortfolioStats } from '@/components/PortfolioStats';
+import { MonthlyActivity } from '@/components/MonthlyActivity';
 import { useBitcoinPrice } from '@/hooks/useBitcoinPrice';
 import { usePurchases } from '@/hooks/usePurchases';
 import { TOTAL_BTC_GOAL, TOTAL_PURCHASES_COUNT, PLAN_DETAILS, PlanType } from '@/data/purchasePlan';
@@ -70,6 +72,12 @@ const Index = () => {
             );
           })}
         </div>
+
+        <PortfolioStats 
+          totalBtc={totalBtcAccumulated} 
+          totalInvestedEUR={totalSpentEUR} 
+          currentBtcPriceEUR={priceData?.priceEUR ?? null}
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 md:gap-6">
           {/* Left column - Price & Chart */}
@@ -165,6 +173,9 @@ const Index = () => {
                 onToggle={togglePurchase}
               />
             </div>
+
+            {/* Monthly Activity */}
+            <MonthlyActivity purchases={purchases} />
           </div>
         </div>
       </div>
