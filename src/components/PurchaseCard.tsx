@@ -7,9 +7,10 @@ interface PurchaseCardProps {
   purchase: Purchase;
   currentPrice: number | null;
   onToggle: (id: number, actualPrice?: number, actualCostEUR?: number) => void;
+  isFirstPending?: boolean;
 }
 
-export const PurchaseCard = ({ purchase, currentPrice, onToggle }: PurchaseCardProps) => {
+export const PurchaseCard = ({ purchase, currentPrice, onToggle, isFirstPending }: PurchaseCardProps) => {
   const isPriceBelow = currentPrice !== null && currentPrice <= purchase.targetPrice;
   
   const handleToggle = () => {
@@ -29,6 +30,10 @@ export const PurchaseCard = ({ purchase, currentPrice, onToggle }: PurchaseCardP
       year: 'numeric',
     });
   };
+
+  // Determine display price: If it's the next pending purchase, show LIVE price instead of target
+  const showLivePrice = isFirstPending && !purchase.completed && currentPrice;
+  const displayPrice = showLivePrice ? currentPrice : purchase.targetPrice;
 
   return (
     <div
@@ -79,22 +84,29 @@ export const PurchaseCard = ({ purchase, currentPrice, onToggle }: PurchaseCardP
               "h-3 w-3 md:h-4 md:w-4 shrink-0",
               isPriceBelow && !purchase.completed ? "text-primary" : "text-muted-foreground"
             )} />
-            <span className={cn(
-              "text-base md:text-lg font-bold font-mono",
-              isPriceBelow && !purchase.completed ? "text-primary" : ""
-            )}>
-              ${purchase.targetPrice.toLocaleString()}
-            </span>
+            <div className="flex flex-col">
+              <span className={cn(
+                "text-base md:text-lg font-bold font-mono",
+                isPriceBelow && !purchase.completed ? "text-primary" : ""
+              )}>
+                ${displayPrice?.toLocaleString()}
+              </span>
+              {showLivePrice && (
+                <span className="text-[10px] text-muted-foreground">
+                  Objetivo: ${purchase.targetPrice.toLocaleString()}
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs md:text-sm">
             <span className="text-muted-foreground whitespace-nowrap">
               {purchase.btcAmount} BTC
             </span>
-            <span className={`whitespace-nowrap font-mono ${!purchase.completed && currentPrice ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
+            <span className={`whitespace-nowrap font-mono ${!purchase.completed && showLivePrice ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
               ~€{purchase.completed && purchase.actualCostEUR 
                 ? purchase.actualCostEUR.toFixed(2)
-                : currentPrice 
+                : showLivePrice && currentPrice
                   ? (currentPrice * purchase.btcAmount * 0.92).toFixed(2)
                   : purchase.estimatedCostEUR.toFixed(2)}
             </span>

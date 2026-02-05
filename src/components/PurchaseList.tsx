@@ -46,6 +46,8 @@ export const PurchaseList = ({ purchases, currentPrice, onToggle }: PurchaseList
     { key: 'near', label: 'Alertas', icon: AlertTriangle, count: nearCount },
   ];
 
+  const firstPendingIndex = purchases.findIndex(p => !p.completed);
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
@@ -83,14 +85,18 @@ export const PurchaseList = ({ purchases, currentPrice, onToggle }: PurchaseList
             <p>No hay compras en esta categoría</p>
           </div>
         ) : (
-          filteredPurchases.map(purchase => (
-            <PurchaseCard
-              key={purchase.id}
-              purchase={purchase}
-              currentPrice={currentPrice}
-              onToggle={onToggle}
-            />
-          ))
+          filteredPurchases.map((purchase) => {
+            const isFirstPending = purchase.id === purchases[firstPendingIndex]?.id;
+            return (
+              <PurchaseCard
+                key={purchase.id}
+                purchase={purchase}
+                currentPrice={currentPrice}
+                onToggle={onToggle}
+                isFirstPending={isFirstPending}
+              />
+            );
+          })
         )}
       </div>
     </div>
