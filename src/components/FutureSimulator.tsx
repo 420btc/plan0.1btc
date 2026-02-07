@@ -3,15 +3,17 @@ import { TrendingUp, Wallet } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 
 interface FutureSimulatorProps {
-  totalBtc: number;
+  currentPriceUSD: number | null;
+  currentPriceEUR: number | null;
 }
 
-export const FutureSimulator = ({ totalBtc }: FutureSimulatorProps) => {
+export const FutureSimulator = ({ currentPriceUSD, currentPriceEUR }: FutureSimulatorProps) => {
   const [projectedPrice, setProjectedPrice] = useState<number>(100000);
   
   const targetBtc = 0.1;
-  const currentStackValue = totalBtc * projectedPrice;
   const targetStackValue = targetBtc * projectedPrice;
+  const liveTargetUSD = currentPriceUSD ? targetBtc * currentPriceUSD : null;
+  const liveTargetEUR = currentPriceEUR ? targetBtc * currentPriceEUR : null;
 
   return (
     <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
@@ -42,30 +44,29 @@ export const FutureSimulator = ({ totalBtc }: FutureSimulatorProps) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 pt-2">
-          <div className="bg-black/20 p-3 rounded-xl border border-white/5">
-            <div className="flex items-center gap-1.5 mb-1.5">
-              <Wallet className="h-3 w-3 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground">Tu Cartera Actual</span>
-            </div>
-            <div className="text-lg md:text-xl font-bold font-mono">
-              ${Math.round(currentStackValue).toLocaleString()}
-            </div>
-            <div className="text-[10px] text-muted-foreground mt-1">
-              con {totalBtc.toFixed(4)} BTC
-            </div>
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
           <div className="bg-primary/10 p-3 rounded-xl border border-primary/20">
             <div className="flex items-center gap-1.5 mb-1.5">
               <TrendingUp className="h-3 w-3 text-primary" />
-              <span className="text-xs text-primary/80">Meta (0.1 BTC)</span>
+              <span className="text-xs text-primary/80">Proyección (0.1 BTC)</span>
             </div>
             <div className="text-lg md:text-xl font-bold font-mono text-primary">
               ${Math.round(targetStackValue).toLocaleString()}
             </div>
             <div className="text-[10px] text-primary/60 mt-1">
               Potencial Total
+            </div>
+          </div>
+          <div className="bg-black/20 p-3 rounded-xl border border-white/5">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <Wallet className="h-3 w-3 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">Costo 0.1 BTC (Live)</span>
+            </div>
+            <div className="text-lg md:text-xl font-bold font-mono">
+              €{liveTargetEUR !== null ? Math.round(liveTargetEUR).toLocaleString('es-ES') : '---'}
+            </div>
+            <div className="text-[10px] text-muted-foreground mt-1">
+              ${liveTargetUSD !== null ? Math.round(liveTargetUSD).toLocaleString('en-US') : '---'}
             </div>
           </div>
         </div>

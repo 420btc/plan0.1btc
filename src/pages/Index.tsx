@@ -196,7 +196,10 @@ const Index = () => {
           {/* Right column - Purchase List */}
           <div className="lg:col-span-3 min-w-0 flex flex-col gap-4 md:gap-6 h-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              <FutureSimulator totalBtc={totalBtcAccumulated} />
+              <FutureSimulator
+                currentPriceUSD={priceData?.price ?? null}
+                currentPriceEUR={priceData?.priceEUR ?? null}
+              />
               <HalvingCountdown />
             </div>
 
