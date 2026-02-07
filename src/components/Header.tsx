@@ -74,7 +74,6 @@ export const Header = ({ onReset }: HeaderProps) => {
         </div>
         <div>
           <h1 className="text-lg md:text-2xl font-bold">BTC Tracker</h1>
-          <p className="text-xs md:text-sm text-muted-foreground">Plan de Acumulación 0.1 BTC</p>
         </div>
       </div>
 

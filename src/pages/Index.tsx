@@ -64,7 +64,7 @@ const Index = () => {
                 Acumula 0.1 BTC con un plan claro, visual y flexible
               </h1>
               <p className="text-sm md:text-base text-muted-foreground max-w-xl">
-                Simulaciones en tiempo real, alertas y control total de tu progreso. Todo optimizado para móvil y pensado para decisiones rápidas.
+                Simulaciones en tiempo real, alertas y control total de tu progreso. Diseñado para seguir tu ritmo y anticipar oportunidades.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Button
