@@ -10,6 +10,11 @@ import { FearAndGreed } from '@/components/FearAndGreed';
 import { SatsConverter } from '@/components/SatsConverter';
 import { FutureSimulator } from '@/components/FutureSimulator';
 import { HalvingCountdown } from '@/components/HalvingCountdown';
+import { ScenarioSimulation } from '@/components/ScenarioSimulation';
+import { AlertsPanel } from '@/components/AlertsPanel';
+import { DcaFlexible } from '@/components/DcaFlexible';
+import { TaxesPanel } from '@/components/TaxesPanel';
+import { ExportCsvCard } from '@/components/ExportCsvCard';
 import { useBitcoinPrice } from '@/hooks/useBitcoinPrice';
 import { usePurchases } from '@/hooks/usePurchases';
 import { TOTAL_BTC_GOAL, PLAN_DETAILS, PlanType, PURCHASE_COUNTS } from '@/data/purchasePlan';
@@ -34,7 +39,7 @@ const Index = () => {
   const nextPurchase = purchases.find(p => !p.completed);
   const buyZones = purchases
     .filter(p => !p.completed)
-    .slice(0, 3) // Show next 3 buy zones
+    .slice(0, 3)
     .map(p => p.targetPrice);
 
   return (
@@ -208,9 +213,20 @@ const Index = () => {
               />
             </div>
 
-            {/* Monthly Activity */}
             <MonthlyActivity purchases={purchases} />
           </div>
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
+          <ScenarioSimulation
+            totalBtc={totalBtcAccumulated}
+            currentPriceEur={priceData?.priceEUR ?? null}
+            targetBtc={TOTAL_BTC_GOAL}
+          />
+          <AlertsPanel currentPriceUsd={priceData?.price ?? null} />
+          <DcaFlexible />
+          <TaxesPanel purchases={purchases} currentPriceEur={priceData?.priceEUR ?? null} />
+          <ExportCsvCard purchases={purchases} currentPriceEur={priceData?.priceEUR ?? null} />
         </div>
       </div>
     </div>
