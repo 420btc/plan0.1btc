@@ -50,6 +50,89 @@ const Index = () => {
       <div className="relative container max-w-6xl mx-auto px-2 md:px-4 pb-8">
         <Header onReset={() => resetPlan(currentPlanType, purchaseCount)} />
 
+        <section className="relative overflow-hidden rounded-3xl border border-border/50 bg-gradient-card shadow-card p-5 md:p-10 mb-6 md:mb-8">
+          <div className="absolute -top-20 -right-10 h-48 w-48 rounded-full bg-primary/20 blur-3xl animate-pulse" />
+          <div className="absolute -bottom-16 left-10 h-56 w-56 rounded-full bg-primary/10 blur-3xl animate-pulse" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,170,0,0.08),_transparent_55%)]" />
+
+          <div className="relative grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-6 md:gap-8 items-center">
+            <div className="space-y-5">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[10px] md:text-xs font-semibold uppercase tracking-widest text-primary">
+                Plan inteligente
+              </div>
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                Acumula 0.1 BTC con un plan claro, visual y flexible
+              </h1>
+              <p className="text-sm md:text-base text-muted-foreground max-w-xl">
+                Simulaciones en tiempo real, alertas y control total de tu progreso. Todo optimizado para móvil y pensado para decisiones rápidas.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  size="sm"
+                  onClick={() => resetPlan(currentPlanType, purchaseCount)}
+                  className="h-9 px-4 text-sm"
+                >
+                  Reiniciar plan
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => resetPlan('moderate', purchaseCount)}
+                  className="h-9 px-4 text-sm"
+                >
+                  Ver plan recomendado
+                </Button>
+              </div>
+              <div className="grid grid-cols-3 gap-3 max-w-md">
+                <div className="bg-black/20 rounded-xl p-3 border border-white/5">
+                  <p className="text-[10px] text-muted-foreground mb-1">Progreso</p>
+                  <p className="text-base font-bold font-mono">{progressPercentage.toFixed(1)}%</p>
+                </div>
+                <div className="bg-black/20 rounded-xl p-3 border border-white/5">
+                  <p className="text-[10px] text-muted-foreground mb-1">Compras</p>
+                  <p className="text-base font-bold font-mono">{completedCount}/{purchaseCount}</p>
+                </div>
+                <div className="bg-black/20 rounded-xl p-3 border border-white/5">
+                  <p className="text-[10px] text-muted-foreground mb-1">Invertido</p>
+                  <p className="text-base font-bold font-mono">€{totalSpentEUR.toFixed(0)}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="absolute -inset-6 rounded-[28px] bg-primary/10 blur-2xl animate-pulse" />
+              <div className="relative rounded-2xl border border-primary/20 bg-black/40 p-4 md:p-6 backdrop-blur-md">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs text-muted-foreground">Precio actual</span>
+                  <span className="text-xs font-mono text-primary animate-pulse">live</span>
+                </div>
+                <div className="space-y-3">
+                  <div className="text-2xl md:text-3xl font-bold font-mono">
+                    ${priceData?.price?.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) ?? '---'}
+                  </div>
+                  <div className="text-sm text-muted-foreground font-mono">
+                    €{priceData?.priceEUR?.toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) ?? '---'}
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 pt-2">
+                    <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+                      <p className="text-[10px] text-muted-foreground mb-1">Meta 0.1 BTC</p>
+                      <p className="text-sm font-bold font-mono">
+                        €{priceData?.priceEUR ? Math.round(priceData.priceEUR * TOTAL_BTC_GOAL).toLocaleString('es-ES') : '---'}
+                      </p>
+                    </div>
+                    <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+                      <p className="text-[10px] text-muted-foreground mb-1">Próxima compra</p>
+                      <p className="text-sm font-bold font-mono">
+                        {nextPurchase ? `$${nextPurchase.targetPrice.toLocaleString()}` : '---'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div className="mb-6 md:mb-8 grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           {(Object.entries(PLAN_DETAILS) as [PlanType, typeof PLAN_DETAILS['moderate']][]).map(([key, detail]) => {
             const isSelected = currentPlanType === key;
