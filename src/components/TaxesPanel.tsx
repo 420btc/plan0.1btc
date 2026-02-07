@@ -2,13 +2,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Purchase } from '@/data/purchasePlan';
+import { cn } from '@/lib/utils';
 
 interface TaxesPanelProps {
   purchases: Purchase[];
   currentPriceEur: number | null;
+  className?: string;
 }
 
-export const TaxesPanel = ({ purchases, currentPriceEur }: TaxesPanelProps) => {
+export const TaxesPanel = ({ purchases, currentPriceEur, className }: TaxesPanelProps) => {
   const storageKey = 'btc-accumulation-tax-v1';
   const [taxRate, setTaxRate] = useState('19');
   const [feeRate, setFeeRate] = useState('0.2');
@@ -74,7 +76,7 @@ export const TaxesPanel = ({ purchases, currentPriceEur }: TaxesPanelProps) => {
   );
 
   return (
-    <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
+    <div className={cn("bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50", className)}>
       <h2 className="text-lg md:text-xl font-semibold mb-4">Impuestos y PnL</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
         <div className="space-y-2">

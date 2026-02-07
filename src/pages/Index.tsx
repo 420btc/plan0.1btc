@@ -194,7 +194,7 @@ const Index = () => {
           </div>
 
           {/* Right column - Purchase List */}
-          <div className="lg:col-span-3 min-w-0 space-y-4 md:space-y-6">
+          <div className="lg:col-span-3 min-w-0 flex flex-col gap-4 md:gap-6 h-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <FutureSimulator totalBtc={totalBtcAccumulated} />
               <HalvingCountdown />
@@ -213,20 +213,24 @@ const Index = () => {
               />
             </div>
 
-            <MonthlyActivity purchases={purchases} />
+            <div className="flex-1">
+              <MonthlyActivity purchases={purchases} className="h-full" />
+            </div>
           </div>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-stretch">
           <ScenarioSimulation
             totalBtc={totalBtcAccumulated}
             currentPriceEur={priceData?.priceEUR ?? null}
             targetBtc={TOTAL_BTC_GOAL}
           />
           <AlertsPanel currentPriceUsd={priceData?.price ?? null} />
-          <DcaFlexible />
-          <TaxesPanel purchases={purchases} currentPriceEur={priceData?.priceEUR ?? null} />
-          <ExportCsvCard purchases={purchases} currentPriceEur={priceData?.priceEUR ?? null} />
+          <DcaFlexible className="h-full" />
+          <TaxesPanel purchases={purchases} currentPriceEur={priceData?.priceEUR ?? null} className="h-full" />
+          <div className="lg:col-span-2">
+            <ExportCsvCard purchases={purchases} currentPriceEur={priceData?.priceEUR ?? null} />
+          </div>
         </div>
       </div>
     </div>

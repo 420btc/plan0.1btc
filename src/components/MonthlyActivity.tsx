@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Purchase } from '@/data/purchasePlan';
+import { cn } from '@/lib/utils';
 import {
   Carousel,
   CarouselContent,
@@ -11,6 +12,7 @@ import { BarChart3 } from 'lucide-react';
 
 interface MonthlyActivityProps {
   purchases: Purchase[];
+  className?: string;
 }
 
 interface MonthData {
@@ -23,7 +25,7 @@ interface MonthData {
   purchases: Purchase[];
 }
 
-export const MonthlyActivity = ({ purchases }: MonthlyActivityProps) => {
+export const MonthlyActivity = ({ purchases, className }: MonthlyActivityProps) => {
   const monthlyData = useMemo(() => {
     const grouped = purchases.reduce((acc, purchase) => {
       const date = new Date(purchase.estimatedDate);
@@ -70,7 +72,7 @@ export const MonthlyActivity = ({ purchases }: MonthlyActivityProps) => {
   const maxCost = Math.max(...monthlyData.map(d => d.totalCost));
 
   return (
-    <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
+    <div className={cn("bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50", className)}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-primary" />

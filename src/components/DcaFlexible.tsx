@@ -2,8 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { cn } from '@/lib/utils';
 
-export const DcaFlexible = () => {
+interface DcaFlexibleProps {
+  className?: string;
+}
+
+export const DcaFlexible = ({ className }: DcaFlexibleProps) => {
   const storageKey = 'btc-accumulation-dca-v1';
   const [annualBudget, setAnnualBudget] = useState('2400');
   const [volatilityWeight, setVolatilityWeight] = useState(40);
@@ -51,7 +56,7 @@ export const DcaFlexible = () => {
   }, [annualBudget, volatilityWeight]);
 
   return (
-    <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
+    <div className={cn("bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50", className)}>
       <h2 className="text-lg md:text-xl font-semibold mb-4">DCA Flexible</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
         <div className="space-y-2">
