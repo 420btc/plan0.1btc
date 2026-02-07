@@ -15,6 +15,7 @@ import { AlertsPanel } from '@/components/AlertsPanel';
 import { DcaFlexible } from '@/components/DcaFlexible';
 import { TaxesPanel } from '@/components/TaxesPanel';
 import { ExportCsvCard } from '@/components/ExportCsvCard';
+import { OnboardingModal } from '@/components/OnboardingModal';
 import { useBitcoinPrice } from '@/hooks/useBitcoinPrice';
 import { usePurchases } from '@/hooks/usePurchases';
 import { TOTAL_BTC_GOAL, PLAN_DETAILS, PlanType, PURCHASE_COUNTS } from '@/data/purchasePlan';
@@ -49,6 +50,7 @@ const Index = () => {
       
       <div className="relative container max-w-6xl mx-auto px-2 md:px-4 pb-8">
         <Header onReset={() => resetPlan(currentPlanType, purchaseCount)} />
+        <OnboardingModal />
 
         <section className="relative overflow-hidden rounded-3xl border border-border/50 bg-gradient-card shadow-card p-5 md:p-10 mb-6 md:mb-8">
           <div className="absolute -top-20 -right-10 h-48 w-48 rounded-full bg-primary/20 blur-3xl animate-pulse" />
