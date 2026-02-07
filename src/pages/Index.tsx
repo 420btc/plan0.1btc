@@ -213,8 +213,8 @@ const Index = () => {
               />
             </div>
 
-            <div className="flex-1">
-              <MonthlyActivity purchases={purchases} className="h-full" />
+            <div className="flex-1 min-h-[420px]">
+              <MonthlyActivity purchases={purchases} className="h-full min-h-[420px]" />
             </div>
           </div>
         </div>

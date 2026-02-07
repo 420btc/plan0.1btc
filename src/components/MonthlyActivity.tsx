@@ -53,7 +53,6 @@ export const MonthlyActivity = ({ purchases, className }: MonthlyActivityProps) 
       if (purchase.completed) acc[key].completedCount += 1;
       acc[key].purchases.push(purchase);
       
-      // Update future status: if any purchase in month is completed, it's not fully future
       if (purchase.completed) acc[key].isFuture = false;
       
       return acc;
@@ -64,16 +63,15 @@ export const MonthlyActivity = ({ purchases, className }: MonthlyActivityProps) 
       .map(([key, value]) => ({
         ...value,
         id: key,
-        // Status: 'completed' (all done), 'partial' (some done), 'future' (none done)
         status: value.completedCount === value.count ? 'completed' : value.completedCount > 0 ? 'partial' : 'future'
       }));
   }, [purchases]);
 
-  const maxCost = Math.max(...monthlyData.map(d => d.totalCost));
+  const maxCost = Math.max(1, ...monthlyData.map(d => d.totalCost));
 
   return (
-    <div className={cn("bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50", className)}>
-      <div className="flex items-center justify-between mb-6">
+    <div className={cn("bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50 flex flex-col h-full min-h-[420px]", className)}>
+      <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-primary" />
           <h2 className="text-lg font-semibold">Actividad Mensual</h2>
@@ -85,13 +83,13 @@ export const MonthlyActivity = ({ purchases, className }: MonthlyActivityProps) 
           align: "start",
           loop: false,
         }}
-        className="w-full"
+        className="w-full flex flex-col flex-1 min-h-0"
       >
-        <CarouselContent className="-ml-2 md:-ml-4">
+        <CarouselContent className="-ml-2 md:-ml-4 flex-1 h-full items-stretch">
           {monthlyData.map((data) => (
-            <CarouselItem key={data.id} className="pl-2 md:pl-4 basis-1/3 md:basis-1/4 lg:basis-1/5">
+            <CarouselItem key={data.id} className="pl-2 md:pl-4 basis-1/3 md:basis-1/4 lg:basis-1/5 h-full">
               <div className="flex flex-col gap-3 group cursor-pointer hover:bg-white/5 p-2 rounded-lg transition-colors h-full">
-                <div className="h-32 flex items-end justify-center w-full bg-black/20 rounded-lg relative overflow-hidden">
+                <div className="flex-1 min-h-[200px] flex items-end justify-center w-full bg-black/20 rounded-lg relative overflow-hidden">
                   <div 
                     className={`w-full mx-2 rounded-t-sm transition-all duration-500 ${
                       data.status === 'completed' ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.3)]' :
