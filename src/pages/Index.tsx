@@ -12,9 +12,9 @@ import { FutureSimulator } from '@/components/FutureSimulator';
 import { HalvingCountdown } from '@/components/HalvingCountdown';
 import { useBitcoinPrice } from '@/hooks/useBitcoinPrice';
 import { usePurchases } from '@/hooks/usePurchases';
-import { TOTAL_BTC_GOAL, TOTAL_PURCHASES_COUNT, PLAN_DETAILS, PlanType } from '@/data/purchasePlan';
+import { TOTAL_BTC_GOAL, PLAN_DETAILS, PlanType, PURCHASE_COUNTS } from '@/data/purchasePlan';
 import { Activity, CalendarClock } from 'lucide-react';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
   const { priceData, priceHistory, isLoading, error } = useBitcoinPrice();
@@ -23,6 +23,8 @@ const Index = () => {
     togglePurchase, 
     resetPlan,
     currentPlanType,
+    purchaseCount,
+    btcPerPurchase,
     completedCount,
     totalBtcAccumulated,
     progressPercentage,
@@ -41,7 +43,7 @@ const Index = () => {
       <div className="fixed inset-0 bg-gradient-glow pointer-events-none" />
       
       <div className="relative container max-w-6xl mx-auto px-2 md:px-4 pb-8">
-        <Header onReset={() => resetPlan(currentPlanType)} />
+        <Header onReset={() => resetPlan(currentPlanType, purchaseCount)} />
 
         <div className="mb-6 md:mb-8 grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           {(Object.entries(PLAN_DETAILS) as [PlanType, typeof PLAN_DETAILS['moderate']][]).map(([key, detail]) => {
@@ -49,7 +51,7 @@ const Index = () => {
             return (
               <button
                 key={key}
-                onClick={() => resetPlan(key)}
+                onClick={() => resetPlan(key, purchaseCount)}
                 className={`
                   relative overflow-hidden rounded-xl p-3 md:p-4 text-left transition-all duration-300 border
                   ${isSelected 
@@ -75,6 +77,23 @@ const Index = () => {
               </button>
             );
           })}
+        </div>
+
+        <div className="flex items-center gap-2 mb-6">
+          <span className="text-xs md:text-sm text-muted-foreground">Cantidad de compras</span>
+          <div className="flex items-center gap-2">
+            {PURCHASE_COUNTS.map((count) => (
+              <Button
+                key={count}
+                variant={purchaseCount === count ? "default" : "outline"}
+                size="sm"
+                onClick={() => resetPlan(currentPlanType, count)}
+                className="h-7 px-3 text-xs"
+              >
+                {count}
+              </Button>
+            ))}
+          </div>
         </div>
 
         <PortfolioStats 
@@ -161,7 +180,7 @@ const Index = () => {
             {/* Progress Card */}
             <ProgressCard
               completedCount={completedCount}
-              totalCount={TOTAL_PURCHASES_COUNT}
+              totalCount={purchaseCount}
               totalBtcAccumulated={totalBtcAccumulated}
               targetBtc={TOTAL_BTC_GOAL}
               progressPercentage={progressPercentage}
@@ -179,7 +198,7 @@ const Index = () => {
             <div className="bg-gradient-card rounded-2xl p-4 md:p-6 shadow-card border border-border/50">
               <h2 className="text-lg md:text-xl font-semibold mb-3 md:mb-4">Plan de Compras ({PLAN_DETAILS[currentPlanType].name})</h2>
               <p className="text-xs md:text-sm text-muted-foreground mb-4 md:mb-6">
-                50 compras de 0.002 BTC cada una. {PLAN_DETAILS[currentPlanType].description}.
+                {purchaseCount} compras de {btcPerPurchase} BTC cada una. {PLAN_DETAILS[currentPlanType].description}.
               </p>
               
               <PurchaseList

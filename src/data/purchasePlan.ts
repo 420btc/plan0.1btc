@@ -11,6 +11,9 @@ export interface Purchase {
 }
 
 export type PlanType = 'conservative' | 'moderate' | 'aggressive';
+export type PurchaseCount = 25 | 50;
+
+export const TOTAL_BTC_GOAL = 0.1;
 
 export const PLAN_DETAILS: Record<PlanType, { name: string; description: string; startPrice: number; endPrice: number }> = {
   conservative: {
@@ -33,25 +36,27 @@ export const PLAN_DETAILS: Record<PlanType, { name: string; description: string;
   },
 };
 
-// Plan de 50 compras de 0.002 BTC cada una
-// Tasa EUR/USD aproximada: 0.86
 const EUR_USD_RATE = 0.86;
-const BTC_PER_PURCHASE = 0.002;
-const TOTAL_PURCHASES = 50;
+export const PURCHASE_COUNTS: PurchaseCount[] = [50, 25];
+
+export const getBtcPerPurchase = (purchaseCount: PurchaseCount) => {
+  return Number((TOTAL_BTC_GOAL / purchaseCount).toFixed(6));
+};
 
 // Fechas desde Marzo 2026 hasta finales 2028 (~34 meses, cada ~21 días)
 const START_DATE = new Date('2026-03-01');
 const DAYS_BETWEEN = 21;
 
-export const generatePurchasePlan = (type: PlanType = 'moderate'): Purchase[] => {
+export const generatePurchasePlan = (type: PlanType = 'moderate', purchaseCount: PurchaseCount = 50): Purchase[] => {
   const { startPrice, endPrice } = PLAN_DETAILS[type];
-  const priceStep = (startPrice - endPrice) / (TOTAL_PURCHASES - 1);
+  const btcPerPurchase = getBtcPerPurchase(purchaseCount);
+  const priceStep = (startPrice - endPrice) / (purchaseCount - 1);
   
   const purchases: Purchase[] = [];
   
-  for (let i = 0; i < TOTAL_PURCHASES; i++) {
+  for (let i = 0; i < purchaseCount; i++) {
     const targetPrice = Math.round(startPrice - (priceStep * i));
-    const estimatedCostUSD = targetPrice * BTC_PER_PURCHASE;
+    const estimatedCostUSD = targetPrice * btcPerPurchase;
     const estimatedCostEUR = Math.round(estimatedCostUSD * EUR_USD_RATE * 100) / 100;
     
     const purchaseDate = new Date(START_DATE);
@@ -60,7 +65,7 @@ export const generatePurchasePlan = (type: PlanType = 'moderate'): Purchase[] =>
     purchases.push({
       id: i + 1,
       targetPrice,
-      btcAmount: BTC_PER_PURCHASE,
+      btcAmount: btcPerPurchase,
       estimatedCostEUR,
       estimatedDate: purchaseDate.toISOString().split('T')[0],
       completed: false,
@@ -69,6 +74,3 @@ export const generatePurchasePlan = (type: PlanType = 'moderate'): Purchase[] =>
   
   return purchases;
 };
-
-export const TOTAL_BTC_GOAL = 0.1;
-export const TOTAL_PURCHASES_COUNT = TOTAL_PURCHASES;

@@ -9,6 +9,7 @@ interface HeaderProps {
 
 export const Header = ({ onReset }: HeaderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const planCountKey = 'btc-accumulation-plan-count-v5';
 
   const handleExport = () => {
     const data = localStorage.getItem('btc-accumulation-purchases-v5');
@@ -40,8 +41,11 @@ export const Header = ({ onReset }: HeaderProps) => {
     reader.onload = (e) => {
       try {
         const content = e.target?.result as string;
-        JSON.parse(content); // Validate JSON
+        const parsed = JSON.parse(content);
         localStorage.setItem('btc-accumulation-purchases-v5', content);
+        if (Array.isArray(parsed) && (parsed.length === 25 || parsed.length === 50)) {
+          localStorage.setItem(planCountKey, String(parsed.length));
+        }
         window.location.reload();
         toast.success('Datos importados correctamente');
       } catch (err) {
