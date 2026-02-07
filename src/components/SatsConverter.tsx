@@ -5,46 +5,46 @@ import { Button } from '@/components/ui/button';
 
 interface SatsConverterProps {
   currentPriceEUR: number | null;
+  currentPriceUSD: number | null;
 }
 
-export const SatsConverter = ({ currentPriceEUR }: SatsConverterProps) => {
-  const [eurAmount, setEurAmount] = useState<string>('50');
+export const SatsConverter = ({ currentPriceEUR, currentPriceUSD }: SatsConverterProps) => {
+  const [currency, setCurrency] = useState<'EUR' | 'USD'>('EUR');
+  const [fiatAmount, setFiatAmount] = useState<string>('50');
   const [satsAmount, setSatsAmount] = useState<string>('');
+  const [lastEdited, setLastEdited] = useState<'fiat' | 'sats'>('fiat');
+
+  const selectedPrice = currency === 'EUR' ? currentPriceEUR : currentPriceUSD;
 
   useEffect(() => {
-    if (currentPriceEUR && eurAmount) {
-      const eur = parseFloat(eurAmount);
-      if (!isNaN(eur)) {
-        const sats = (eur / currentPriceEUR) * 100000000;
-        setSatsAmount(Math.floor(sats).toString());
-      }
-    }
-  }, [currentPriceEUR, eurAmount]);
-
-  const handleEurChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEurAmount(e.target.value);
-    if (currentPriceEUR) {
-      const eur = parseFloat(e.target.value);
-      if (!isNaN(eur)) {
-        const sats = (eur / currentPriceEUR) * 100000000;
+    if (!selectedPrice) return;
+    if (lastEdited === 'fiat') {
+      const fiat = parseFloat(fiatAmount);
+      if (!isNaN(fiat)) {
+        const sats = (fiat / selectedPrice) * 100000000;
         setSatsAmount(Math.floor(sats).toString());
       } else {
         setSatsAmount('');
       }
+      return;
     }
+    const sats = parseFloat(satsAmount);
+    if (!isNaN(sats)) {
+      const fiat = (sats / 100000000) * selectedPrice;
+      setFiatAmount(fiat.toFixed(2));
+    } else {
+      setFiatAmount('');
+    }
+  }, [fiatAmount, lastEdited, satsAmount, selectedPrice]);
+
+  const handleFiatChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLastEdited('fiat');
+    setFiatAmount(e.target.value);
   };
 
   const handleSatsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLastEdited('sats');
     setSatsAmount(e.target.value);
-    if (currentPriceEUR) {
-      const sats = parseFloat(e.target.value);
-      if (!isNaN(sats)) {
-        const eur = (sats / 100000000) * currentPriceEUR;
-        setEurAmount(eur.toFixed(2));
-      } else {
-        setEurAmount('');
-      }
-    }
   };
 
   return (
@@ -55,17 +55,46 @@ export const SatsConverter = ({ currentPriceEUR }: SatsConverterProps) => {
       </div>
 
       <div className="space-y-4">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Button
+              variant={currency === 'EUR' ? "default" : "outline"}
+              size="sm"
+              onClick={() => setCurrency('EUR')}
+              className="h-7 px-3 text-xs"
+            >
+              EUR
+            </Button>
+            <Button
+              variant={currency === 'USD' ? "default" : "outline"}
+              size="sm"
+              onClick={() => setCurrency('USD')}
+              className="h-7 px-3 text-xs"
+            >
+              USD
+            </Button>
+          </div>
+          <div className="text-[10px] text-muted-foreground font-mono">
+            {currency === 'EUR' ? '€' : '$'}
+            {selectedPrice ? selectedPrice.toLocaleString(currency === 'EUR' ? 'es-ES' : 'en-US', { maximumFractionDigits: 2 }) : '---'}
+          </div>
+        </div>
+
         <div className="space-y-2">
-          <label className="text-xs text-muted-foreground ml-1">Euros (€)</label>
+          <label className="text-xs text-muted-foreground ml-1">
+            {currency === 'EUR' ? 'Euros (€)' : 'Dólares ($)'}
+          </label>
           <div className="relative">
             <Input
               type="number"
-              value={eurAmount}
-              onChange={handleEurChange}
+              value={fiatAmount}
+              onChange={handleFiatChange}
               className="bg-black/20 border-white/10 text-lg font-mono pl-3 pr-8"
               placeholder="0.00"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">€</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
+              {currency === 'EUR' ? '€' : '$'}
+            </span>
           </div>
         </div>
 

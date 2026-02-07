@@ -134,7 +134,10 @@ const Index = () => {
             <FearAndGreed />
 
             {/* Sats Converter */}
-            <SatsConverter currentPriceEUR={priceData?.priceEUR ?? null} />
+            <SatsConverter
+              currentPriceEUR={priceData?.priceEUR ?? null}
+              currentPriceUSD={priceData?.price ?? null}
+            />
 
              {/* Countdown Card */}
              {nextPurchase && (
