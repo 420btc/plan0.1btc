@@ -55,7 +55,7 @@ export const OnboardingModal = () => {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-3xl border border-border/60 bg-gradient-card p-0 shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto scrollbar-thin border border-border/60 bg-gradient-card p-0 shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
         <div className="relative overflow-hidden rounded-lg p-6 md:p-8">
           <div className="absolute -top-24 right-4 h-48 w-48 rounded-full bg-primary/20 blur-3xl animate-pulse" />
           <div className="absolute -bottom-16 left-4 h-40 w-40 rounded-full bg-primary/10 blur-3xl animate-pulse" />
